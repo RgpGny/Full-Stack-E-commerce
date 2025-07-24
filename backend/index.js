@@ -9,6 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import { securityHeaders, httpsRedirect, cspReportHandler } from "./middleware/securityMiddleware.js";
 import { generalRateLimit, getRateLimitStatus } from "./middleware/rateLimitMiddleware.js";
@@ -74,6 +75,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");

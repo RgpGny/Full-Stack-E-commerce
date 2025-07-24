@@ -8,6 +8,7 @@ import {
   EyeOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../hooks/useCart";
 
 const { Text, Title } = Typography;
 const { Meta } = Card;
@@ -26,15 +27,21 @@ export const ProductCard = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { refreshCart } = useCart();
 
   const handleAddToCart = async (e) => {
     e.stopPropagation();
     setIsLoading(true);
     try {
-      // Sepete ekleme işlemi burada yapılacak
+      const { addToCart } = await import("../utils/Api");
+      await addToCart(id, 1);
       message.success(`${name} sepete eklendi!`);
+      
+      // Sepet sayacını güncelle
+      refreshCart();
     } catch (error) {
-      message.error("Ürün sepete eklenirken hata oluştu.");
+      console.error("Add to cart error:", error);
+      message.error(error.message || "Ürün sepete eklenirken hata oluştu.");
     } finally {
       setIsLoading(false);
     }

@@ -295,3 +295,12 @@ export const clearCart = async () => {
     throw error.response?.data?.message || "Clear cart failed";
   }
 };
+
+export const getCartSummary = async () => {
+  try {
+    const response = await api.get("/api/cart/summary");
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Get cart summary failed";
+  }
+};

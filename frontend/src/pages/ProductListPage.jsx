@@ -65,7 +65,19 @@ export const ProductListPage = () => {
     }
   }, [searchParams]);
 
-  // Veri getirme
+  // Debounced search query için ayrı state
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+
+  // Search query için debounce effect
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
+
+  // Veri getirme - artık debouncedSearchQuery kullanıyor
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,7 +86,7 @@ export const ProductListPage = () => {
         // URL parametrelerini backend'e gönder
         const params = {};
         if (selectedCategory) params.category_id = selectedCategory;
-        if (searchQuery) params.search = searchQuery;
+        if (debouncedSearchQuery) params.search = debouncedSearchQuery;
         
         const [productsResponse, categoriesResponse] = await Promise.all([
           fetchProducts(params),
@@ -92,7 +104,7 @@ export const ProductListPage = () => {
     };
 
     fetchData();
-  }, [selectedCategory, searchQuery]); // selectedCategory ve searchQuery değiştiğinde yeniden çağır
+  }, [selectedCategory, debouncedSearchQuery]); // debouncedSearchQuery kullan
 
   // Filtreleme backend'de yapılıyor, frontend'de sadece sıralama ve fiyat filtresi
   const filteredProducts = products.filter(product => {

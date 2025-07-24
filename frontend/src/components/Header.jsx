@@ -2,6 +2,7 @@ import { Layout, Menu, Button, message, Input, Badge, Avatar, Dropdown, Space } 
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useCart } from "../hooks/useCart";
 import { 
   UserOutlined, 
   SearchOutlined, 
@@ -18,6 +19,7 @@ const { Header: AntHeader } = Layout;
 function Header() {
   const navigate = useNavigate();
   const { logout, user } = useContext(AuthContext);
+  const { cartSummary } = useCart();
 
   // Dinamik menü oluştur
   const getMenuItems = () => {
@@ -103,7 +105,10 @@ function Header() {
     {
       key: 'settings',
       label: (
-        <span className="flex items-center gap-2">
+        <span 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate('/app/settings')}
+        >
           <SettingOutlined />
           Ayarlar
         </span>
@@ -182,11 +187,13 @@ function Header() {
             <Button
               type="text"
               icon={
-                <Badge count={0} size="small">
+                <Badge count={cartSummary?.itemCount || 0} size="small">
                   <ShoppingCartOutlined className="text-lg text-gray-600" />
                 </Badge>
               }
               className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-100 transition-colors"
+              onClick={() => navigate('/app/cart')}
+              title={`Sepetinizde ${cartSummary?.itemCount || 0} ürün var`}
             />
 
             {/* User Menu */}

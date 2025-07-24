@@ -8,6 +8,9 @@
     "start": "nodemon index.js",
     "dev": "nodemon index.js",
     "setup-db": "node scripts/setupDatabase.js",
+    "populate-db": "node scripts/populateDatabase.js",
+    "create-cart-table": "node scripts/createCartTable.js",
+    "populate-fake-orders": "node scripts/populateFakeOrders.js",
     "prod": "NODE_ENV=production node index.js"
   },
   "keywords": [],
@@ -24,6 +27,7 @@
     "helmet": "^8.0.0",
     "js": "^0.1.0",
     "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10",
     "pg": "^8.16.0",

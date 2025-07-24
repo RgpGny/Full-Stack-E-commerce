@@ -5,6 +5,8 @@ import { ProductListPage } from "../pages/ProductListPage";
 import { ProductDetailPage } from "../pages/ProductDetailPage";
 import { OrderPage } from "../pages/OrderPage";
 import { PaymentPage } from "../pages/PaymentPage";
+import { CartPage } from "../pages/CartPage";
+import { SettingsPage } from "../pages/SettingsPage";
 import { LoginPage } from "../pages/LoginPage";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -84,6 +86,22 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <MetricsDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="cart"
+          element={
+            <PrivateRoute>
+              <CartPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <PrivateRoute>
+              <SettingsPage />
             </PrivateRoute>
           }
         />
